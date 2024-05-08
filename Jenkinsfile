@@ -13,7 +13,7 @@
     stages {
       stage ('Checkout code'){
         steps {
-          git(url: 'https://github.com/Said-Ait-Driss/inventory-server', branch: 'main')
+          git(url: 'https://github.com/Said-Ait-Driss/inventory-system', branch: 'main')
           sh "pwd"
         }
       }
