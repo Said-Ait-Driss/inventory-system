@@ -1,0 +1,49 @@
+runing react app
+
+docker build -t pfe_client .
+docker run -p 3000:3000 pfe_client
+
+
+
+docker build -t pfe_server .
+docker run -p 5000:5000 pfe_server
+
+// install jenkins and configure jenkins user to connect to all nodes over ssh 
+    - check this article : https://devops4solutions.com/integrate-ansible-with-jenkins/
+
+
+// configure ansible and nodes
+
+1 - copy ssh public key to the provision nodes 
+
+2 - give the root user rights to ansible directory : /etc/ansible
+    chown -R root /etc/ansible
+
+3 - add the nodes ips to the ansible inventory file : /etc/ansible/hosts
+
+4 - check connectivity of ansible to target nodes :
+    ansible [group-name] -m ping
+
+5 - write the playbook to sync code to nodes in the /home/{ursername}/artifact/playbook.yml
+
+6 - make sure to give the permission to ansible to access and write in the node location where u gonna put the code :
+    go to each node and run : chmod 777 -R [location where the code will hosted]
+
+7 - test the playbook by (cd to /home/{ursername}/artifact/):
+        ansible-playbook [playbook-name]
+
+
+// configure jenkins
+
+1 - creating ne job
+2 - configuring source code managment
+3 choose build trigger options
+
+
+// playbooks 
+
+2 - database 
+    install the mongodb ansible community collection by running under jenkins user: 
+        ansible-galaxy collection install community.mongodb
+
+
