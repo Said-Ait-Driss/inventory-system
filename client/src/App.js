@@ -15,11 +15,16 @@ import { useDispatch } from "react-redux";
 import { getLoginStatus } from "./services/authService";
 import { SET_LOGIN } from "./redux/features/auth/authSlice";
 import AddProduct from "./pages/addProduct/AddProduct";
+import AddCategory from "./pages/addCategory/AddCategory";
+import CategoryList from "./pages/categoryList/CategoryList";
+import AddSupplier from "./pages/addSupplier/AddSupplier";
+import SupplierList from "./pages/supplierList/SupplierList";
 import ProductDetail from "./components/product/productDetail/ProductDetail";
 import EditProduct from "./pages/editProduct/EditProduct";
 import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/EditProfile";
 import Contact from "./pages/contact/Contact";
+import EditCategory from "./pages/editCategory/EditCategory";
 
 axios.defaults.withCredentials = true;
 
@@ -60,6 +65,56 @@ function App() {
             <Sidebar>
               <Layout>
                 <AddProduct />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/add-category"
+          element={
+            <Sidebar>
+              <Layout>
+                <AddCategory />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/categories-list"
+          element={
+            <Sidebar>
+              <Layout>
+                <CategoryList />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/edit-category/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <EditCategory />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/add-supplier"
+          element={
+            <Sidebar>
+              <Layout>
+                <AddSupplier />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/suppliers-list"
+          element={
+            <Sidebar>
+              <Layout>
+                <SupplierList />
               </Layout>
             </Sidebar>
           }

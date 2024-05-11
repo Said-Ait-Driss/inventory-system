@@ -1,11 +1,13 @@
-const path = require('path');
+const path = require("path");
 const express = require("express");
-require("dotenv").config({ path: path.join(__dirname, '.env') });
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const userRoute = require("./routes/userRoute");
 const productRoute = require("./routes/productRoute");
+const supplierRoute = require("./routes/supplierRoute");
+const categoryRoute = require("./routes/categoryRoute");
 const contactRoute = require("./routes/contactRoute");
 const errorHandler = require("./middleWare/errorMiddleware");
 const cookieParser = require("cookie-parser");
@@ -19,7 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", ""],
+    origin: ["http://localhost:3001", ""],
     credentials: true,
   })
 );
@@ -29,6 +31,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Routes Middleware
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
+app.use("/api/suppliers", supplierRoute);
+app.use("/api/categories", categoryRoute);
 app.use("/api/contactus", contactRoute);
 
 // Routes

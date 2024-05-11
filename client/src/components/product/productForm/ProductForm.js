@@ -7,9 +7,10 @@ import "./ProductForm.scss";
 
 const ProductForm = ({
   product,
-  productImage,
   imagePreview,
   description,
+  categories,
+  suppliers,
   setDescription,
   handleInputChange,
   handleImageChange,
@@ -47,14 +48,43 @@ const ProductForm = ({
             onChange={handleInputChange}
           />
 
-          <label>Product Category:</label>
-          <input
-            type="text"
-            placeholder="Product Category"
+          <label>Product Category :</label>
+          <select
             name="category"
+            placeholder="Product Category"
             value={product?.category}
             onChange={handleInputChange}
-          />
+          >
+            <option selected>select a category</option>
+            {categories && categories.length ? (
+              categories.map((cat, index) => (
+                <option value={cat.name} name="category">
+                  {cat.name}
+                </option>
+              ))
+            ) : (
+              <option disabled>please add category</option>
+            )}
+          </select>
+
+          <label>Product Supplier :</label>
+          <select
+            name="supplier"
+            placeholder="Product Supplier"
+            value={product?.supplier}
+            onChange={handleInputChange}
+          >
+            <option selected>select a supplier</option>
+            {suppliers && suppliers.length ? (
+              suppliers.map((supplier, index) => (
+                <option value={supplier.name} name="supplier">
+                  {supplier.name}
+                </option>
+              ))
+            ) : (
+              <option disabled>please add supplier</option>
+            )}
+          </select>
 
           <label>Product Price:</label>
           <input

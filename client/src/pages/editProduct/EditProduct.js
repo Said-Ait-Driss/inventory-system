@@ -10,6 +10,8 @@ import {
   selectProduct,
   updateProduct,
 } from "../../redux/features/product/productSlice";
+import { getCategories } from "../../redux/features/category/categorySlice";
+import { getSuppliers } from "../../redux/features/supplier/supplierSlice";
 
 const EditProduct = () => {
   const { id } = useParams();
@@ -23,9 +25,18 @@ const EditProduct = () => {
   const [productImage, setProductImage] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [description, setDescription] = useState("");
+  const { categories } = useSelector(
+    (state) => state.category
+  );
+
+  const { suppliers } = useSelector(
+    (state) => state.supplier
+  );
 
   useEffect(() => {
     dispatch(getProduct(id));
+    dispatch(getCategories());
+    dispatch(getSuppliers());
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -79,6 +90,8 @@ const EditProduct = () => {
         productImage={productImage}
         imagePreview={imagePreview}
         description={description}
+        categories={categories}
+        suppliers={suppliers}
         setDescription={setDescription}
         handleInputChange={handleInputChange}
         handleImageChange={handleImageChange}

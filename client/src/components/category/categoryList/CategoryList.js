@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { SpinnerImg } from "../../loader/Loader";
-import "./productList.scss";
+import "./categoryList.scss";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
-import { AiOutlineEye } from "react-icons/ai";
 import Search from "../../search/Search";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  FILTER_PRODUCTS,
-  selectFilteredPoducts,
+    FILTER_CATEGORIES,
+  selectFilteredCategories,
 } from "../../../redux/features/filter/filterSlice";
 import ReactPaginate from "react-paginate";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import {
-  deleteProduct,
-  getProducts,
-} from "../../../redux/features/product/productSlice";
 import { Link } from "react-router-dom";
+import { getCategories,deleteCategory } from "../../../redux/features/category/categorySlice";
 
-const ProductList = ({ products, isLoading }) => {
+const CategoriesList = ({ categories, isLoading }) => {
   const [search, setSearch] = useState("");
-  const filteredProducts = useSelector(selectFilteredPoducts);
+  const filteredCategories = useSelector(selectFilteredCategories);
 
   const dispatch = useDispatch();
 
@@ -32,24 +28,22 @@ const ProductList = ({ products, isLoading }) => {
     return text;
   };
 
-  const delProduct = async (id) => {
-    console.log(id);
-    await dispatch(deleteProduct(id));
-    await dispatch(getProducts());
+  const delCategory = async (id) => {
+    await dispatch(deleteCategory(id));
+    await dispatch(getCategories());
   };
 
   const confirmDelete = (id) => {
     confirmAlert({
-      title: "Delete Product",
-      message: "Are you sure you want to delete this product.",
+      title: "Delete category",
+      message: "Are you sure you want to delete this category.",
       buttons: [
         {
           label: "Delete",
-          onClick: () => delProduct(id),
+          onClick: () => delCategory(id),
         },
         {
           label: "Cancel",
-          // onClick: () => alert('Click No')
         },
       ],
     });
@@ -64,27 +58,27 @@ const ProductList = ({ products, isLoading }) => {
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
 
-    setCurrentItems(filteredProducts.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(filteredProducts.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, filteredProducts]);
+    setCurrentItems(filteredCategories.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredCategories.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, filteredCategories]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % filteredProducts.length;
+    const newOffset = (event.selected * itemsPerPage) % filteredCategories.length;
     setItemOffset(newOffset);
   };
   //   End Pagination
 
   useEffect(() => {
-    dispatch(FILTER_PRODUCTS({ products, search }));
-  }, [products, search, dispatch]);
+    dispatch(FILTER_CATEGORIES({ categories, search }));
+  }, [categories, search, dispatch]);
 
   return (
-    <div className="product-list">
+    <div className="Category-list">
       <hr />
       <div className="table">
         <div className="--flex-between --flex-dir-column">
           <span>
-            <h3>Inventory Items</h3>
+            <h3>CategoriesList List</h3>
           </span>
           <span>
             <Search
@@ -97,49 +91,28 @@ const ProductList = ({ products, isLoading }) => {
         {isLoading && <SpinnerImg />}
 
         <div className="table">
-          {!isLoading && products.length === 0 ? (
-            <p>-- No product found, please add a product...</p>
+          {!isLoading && categories.length === 0 ? (
+            <p>-- No Category found, please add an category...</p>
           ) : (
             <table>
               <thead>
                 <tr>
                   <th>s/n</th>
                   <th>Name</th>
-                  <th>Category</th>
-                  <th>Supplier</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Value</th>
                   <th>Action</th>
                 </tr>
               </thead>
 
               <tbody>
-                {currentItems.map((product, index) => {
-                  const { _id, name, category, supplier, price, quantity } = product;
+                {currentItems.map((category, index) => {
+                  const { _id, name} = category;
                   return (
                     <tr key={_id}>
                       <td>{index + 1}</td>
                       <td>{shortenText(name, 16)}</td>
-                      <td>{category}</td>
-                      <td>{supplier}</td>
-                      <td>
-                        {"$"}
-                        {price}
-                      </td>
-                      <td>{quantity}</td>
-                      <td>
-                        {"$"}
-                        {price * quantity}
-                      </td>
                       <td className="icons">
                         <span>
-                          <Link to={`/product-detail/${_id}`}>
-                            <AiOutlineEye size={25} color={"purple"} />
-                          </Link>
-                        </span>
-                        <span>
-                          <Link to={`/edit-product/${_id}`}>
+                          <Link to={`/edit-category/${_id}`}>
                             <FaEdit size={20} color={"green"} />
                           </Link>
                         </span>
@@ -177,4 +150,4 @@ const ProductList = ({ products, isLoading }) => {
   );
 };
 
-export default ProductList;
+export default CategoriesList;

@@ -2,42 +2,41 @@ import axios from "axios";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-const API_URL = `${BACKEND_URL}/api/products/`;
+const API_URL = `${BACKEND_URL}/api/suppliers/`;
 
-// Create New Product
-const createProduct = async (formData) => {
+// Create New Supplier
+const createSupplier = async (formData) => {
   const response = await axios.post(API_URL, formData);
   return response.data;
 };
 
-// Get all products
-const getProducts = async () => {
+// Get all Suppliers
+const getSuppliers = async () => {
   const response = await axios.get(API_URL);
   return response.data;
 };
 
-// Delete a Product
-const deleteProduct = async (id) => {
+// Delete a Supplier
+const deleteSupplier = async (id) => {
   const response = await axios.delete(API_URL + id);
   return response.data;
 };
-// Get a Product
-const getProduct = async (id) => {
+// Get a Supplier
+const getSupplier = async (id) => {
   const response = await axios.get(API_URL + id);
   return response.data;
 };
-// Update Product
-const updateProduct = async (id, formData) => {
+// Update Supplier
+const updateSupplier = async (id, formData) => {
   const response = await axios.patch(`${API_URL}${id}`, formData);
   return response.data;
 };
-
-const productService = {
-  createProduct,
-  getProducts,
-  getProduct,
-  deleteProduct,
-  updateProduct,
+const supplierService = {
+  createSupplier,
+  getSuppliers,
+  getSupplier,
+  deleteSupplier,
+  updateSupplier,
 };
 
-export default productService;
+export default supplierService;

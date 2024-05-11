@@ -1,5 +1,6 @@
 import { FaTh, FaRegChartBar, FaCommentAlt } from "react-icons/fa";
-import { BiImageAdd } from "react-icons/bi";
+import { BiImageAdd, BiCategoryAlt } from "react-icons/bi";
+import { FaPeopleGroup } from "react-icons/fa6";
 
 const menu = [
   {
@@ -11,6 +12,34 @@ const menu = [
     title: "Add Product",
     icon: <BiImageAdd />,
     path: "/add-product",
+  },
+  {
+    title:"Categories",
+    icon: <BiCategoryAlt />,
+    childrens:[
+      {
+        title: "Add Category",
+        path: "/add-category",
+      },
+      {
+        title: "categories List",
+        path: "/categories-list",
+      },
+    ]
+  },
+  {
+    title:"Suppliers",
+    icon: <FaPeopleGroup />,
+    childrens:[
+      {
+        title: "Add Supplier",
+        path: "/add-supplier",
+      },
+      {
+        title: "Suppliers List",
+        path: "/suppliers-list",
+      },
+    ]
   },
   {
     title: "Account",

@@ -12,6 +12,7 @@ const initialState = {
   totalStoreValue: 0,
   outOfStock: 0,
   category: [],
+  supplier: [],
 };
 
 // Create New Product
@@ -152,6 +153,17 @@ const productSlice = createSlice({
       const uniqueCategory = [...new Set(array)];
       state.category = uniqueCategory;
     },
+    CALC_SUPPLIER(state, action) {
+      const products = action.payload;
+      const array = [];
+      products.map((item) => {
+        const { supplier } = item;
+
+        return array.push(supplier);
+      });
+      const uniqueSupplier = [...new Set(array)];
+      state.supplier = uniqueSupplier;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -236,7 +248,7 @@ const productSlice = createSlice({
   },
 });
 
-export const { CALC_STORE_VALUE, CALC_OUTOFSTOCK, CALC_CATEGORY } =
+export const { CALC_STORE_VALUE, CALC_OUTOFSTOCK, CALC_CATEGORY,CALC_SUPPLIER } =
   productSlice.actions;
 
 export const selectIsLoading = (state) => state.product.isLoading;
@@ -244,5 +256,6 @@ export const selectProduct = (state) => state.product.product;
 export const selectTotalStoreValue = (state) => state.product.totalStoreValue;
 export const selectOutOfStock = (state) => state.product.outOfStock;
 export const selectCategory = (state) => state.product.category;
+export const selectSupplier = (state) => state.product.supplier
 
 export default productSlice.reducer;

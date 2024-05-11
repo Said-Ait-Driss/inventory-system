@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/loader/Loader";
@@ -8,9 +8,13 @@ import {
   selectIsLoading,
 } from "../../redux/features/product/productSlice";
 
+import { getCategories } from "../../redux/features/category/categorySlice";
+import { getSuppliers } from "../../redux/features/supplier/supplierSlice";
+
 const initialState = {
   name: "",
   category: "",
+  supplier: "",
   quantity: "",
   price: "",
 };
@@ -23,9 +27,17 @@ const AddProduct = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [description, setDescription] = useState("");
 
+  const { categories } = useSelector((state) => state.category);
+  const { suppliers } = useSelector((state) => state.supplier);
+
+  useEffect(() => {
+    dispatch(getCategories());
+    dispatch(getSuppliers());
+  }, []);
+
   const isLoading = useSelector(selectIsLoading);
 
-  const { name, category, price, quantity } = product;
+  const { name, category, supplier, price, quantity } = product;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,6 +62,7 @@ const AddProduct = () => {
     formData.append("name", name);
     formData.append("sku", generateKSKU(category));
     formData.append("category", category);
+    formData.append("supplier", supplier);
     formData.append("quantity", Number(quantity));
     formData.append("price", price);
     formData.append("description", description);
@@ -71,6 +84,8 @@ const AddProduct = () => {
         productImage={productImage}
         imagePreview={imagePreview}
         description={description}
+        categories={categories}
+        suppliers={suppliers}
         setDescription={setDescription}
         handleInputChange={handleInputChange}
         handleImageChange={handleImageChange}
