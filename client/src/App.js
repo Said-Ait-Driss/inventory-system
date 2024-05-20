@@ -16,6 +16,7 @@ import { getLoginStatus } from "./services/authService";
 import { SET_LOGIN } from "./redux/features/auth/authSlice";
 import AddProduct from "./pages/addProduct/AddProduct";
 import AddCategory from "./pages/addCategory/AddCategory";
+import AddClient from "./pages/addClient/AddClient";
 import CategoryList from "./pages/categoryList/CategoryList";
 import AddSupplier from "./pages/addSupplier/AddSupplier";
 import SupplierList from "./pages/supplierList/SupplierList";
@@ -25,6 +26,10 @@ import Profile from "./pages/profile/Profile";
 import EditProfile from "./pages/profile/EditProfile";
 import Contact from "./pages/contact/Contact";
 import EditCategory from "./pages/editCategory/EditCategory";
+import ClientList from "./components/client/clientList/ClientList";
+import EditClient from "./pages/editClient/EditClient";
+import AddCommand from "./pages/addCommand/AddCommand";
+import CommandList from "./components/command/commandList/CommandList";
 
 axios.defaults.withCredentials = true;
 
@@ -60,11 +65,61 @@ function App() {
           }
         />
         <Route
+          path="/add-command"
+          element={
+            <Sidebar>
+              <Layout>
+                <AddCommand />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="commands-list"
+          element={
+            <Sidebar>
+              <Layout>
+                <CommandList />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
           path="/add-product"
           element={
             <Sidebar>
               <Layout>
                 <AddProduct />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/add-client"
+          element={
+            <Sidebar>
+              <Layout>
+                <AddClient />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/clients-list"
+          element={
+            <Sidebar>
+              <Layout>
+                <ClientList />
+              </Layout>
+            </Sidebar>
+          }
+        />
+         <Route
+          path="/edit-client/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <EditClient />
               </Layout>
             </Sidebar>
           }

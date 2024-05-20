@@ -9,6 +9,8 @@ const productRoute = require("./routes/productRoute");
 const supplierRoute = require("./routes/supplierRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const contactRoute = require("./routes/contactRoute");
+const clientRoute = require("./routes/clientRoute");
+const commandRoute = require("./routes/commandRoute");
 const errorHandler = require("./middleWare/errorMiddleware");
 const cookieParser = require("cookie-parser");
 
@@ -34,6 +36,8 @@ app.use("/api/products", productRoute);
 app.use("/api/suppliers", supplierRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/contactus", contactRoute);
+app.use("/api/clients", clientRoute);
+app.use("/api/commands", commandRoute);
 
 // Routes
 app.get("/api", (req, res) => {
