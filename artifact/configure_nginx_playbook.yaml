@@ -1,0 +1,15 @@
+---
+- hosts: app_servers
+  become: yes
+  tasks:
+    - name: configure nginx
+      copy: src={{ item }} dest=/etc/nginx/sites-available/
+      with_fileglob:
+        - ./nginx/*
+      notify:
+        - restart nginx
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted

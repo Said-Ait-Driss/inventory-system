@@ -1,0 +1,55 @@
+---
+- hosts: app_servers
+  tasks:
+    - name: Remove directory if exists
+      command: rm -rf /home/ubuntu/inventory-system/
+
+    - name: Create inventory-system directory
+      file:
+        state: directory
+        path: /home/ubuntu/inventory-system/
+        owner: ubuntu
+        group: ubuntu
+        mode: 0755
+
+    - name: Copy files to remote host
+      git:
+        repo: https://github.com/Said-Ait-Driss/inventory-system.git
+        dest: /home/ubuntu/inventory-system/
+
+    - name: Copy .env file
+      copy:
+        src: /home/said/inventory-system/server/.env
+        dest: /home/ubuntu/inventory-system/server/.env
+        owner: ubuntu
+        group: ubuntu
+        mode: 0755
+
+    - name: Install server dependencies
+      command: npm install -f
+      args:
+        chdir: /home/ubuntu/inventory-system/server/
+
+    - name: Install client dependencies
+      command: npm install -f
+      args:
+        chdir: /home/ubuntu/inventory-system/client/
+
+    - name: stop the server application with PM2
+      command: pm2 delete inventory_server
+      ignore_errors: yes
+
+    - name: stop the client application with PM2
+      command: pm2 delete inventory_client
+      ignore_errors: yes
+
+    - name: Start the server application with PM2
+      command: pm2 start /home/ubuntu/inventory-system/server/ --name inventory_server
+
+    - name: Start the client application with PM2
+      command: pm2 start npm --name "inventory_client" --cwd "/home/ubuntu/inventory-system/client/" -- start
+
+    - name: Ensure app is running
+      shell: ps aux | grep node
+      register: app_status
+    - debug: msg={{app_status.stdout_lines}}-

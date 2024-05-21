@@ -1,0 +1,15 @@
+---
+- name: updating repository index
+  apt:
+    update_cache: yes
+
+- name: Install/Upgrade pm2 package(s)
+  npm:
+    name: "{{ item }}"
+    global: yes
+    state: present
+  become: true
+  when: inventory_hostname in ['server1']
+  with_items:
+    - pm2
+    - pmx

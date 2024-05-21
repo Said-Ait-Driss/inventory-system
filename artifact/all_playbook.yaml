@@ -1,0 +1,11 @@
+---
+- hosts: all_servers
+  gather_facts: yes
+  become: true
+  vars:
+    NODEJS_VERSION: "20"
+
+  roles:
+    - nginx
+    - nodejs
+    - pm2

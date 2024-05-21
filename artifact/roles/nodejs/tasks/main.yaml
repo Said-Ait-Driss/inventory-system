@@ -1,0 +1,23 @@
+---
+- name: Check Node.js version
+  command: node -v
+  register: node_version
+  ignore_errors: yes
+
+- name: Add Node.js repository key
+  apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+  when: node_version.rc != 0
+
+- name: Add Node.js repository
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_{{ NODEJS_VERSION }}.x {{ ansible_distribution_release }} main"
+    state: present
+    update_cache: yes
+  when: node_version.rc != 0
+
+- name: Install the nodejs
+  apt:
+    name: nodejs
+    state: present
+  when: node_version.rc != 0

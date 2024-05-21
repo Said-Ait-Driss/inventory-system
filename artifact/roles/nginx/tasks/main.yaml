@@ -1,0 +1,17 @@
+---
+- name: Check if Nginx is installed
+  stat:
+    path: /etc/nginx
+  register: nginx_check
+
+- name: install Nginx server
+  apt:
+    name: nginx
+    state: present
+  when: nginx_check.stat.exists == false
+
+- name: start Nginx service
+  service:
+    name: nginx
+    state: started
+    enabled: yes
